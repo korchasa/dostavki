@@ -14,14 +14,9 @@ spec:
         app.kubernetes.io/name: dostavki
         app.kubernetes.io/instance: dostavki
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: default
-          image: hashicorp/http-echo
-          args:
-          - "-text=hello"
-          imagePullPolicy: IfNotPresent
+          image: korchasa/dostavki:latest
           ports:
             - name: http
               containerPort: 8090
