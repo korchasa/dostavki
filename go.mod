@@ -1,4 +1,4 @@
-module github.com/korchasa/kogdaeda
+module github.com/korchasa/dostavki
 
 go 1.14
 

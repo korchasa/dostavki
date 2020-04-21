@@ -3,7 +3,7 @@ package web
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/korchasa/kogdaeda/locator"
+	"github.com/korchasa/dostavki/locator"
 	"net/http"
 )
 

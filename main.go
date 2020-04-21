@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/korchasa/kogdaeda/web"
+	"github.com/korchasa/dostavki/web"
 	"log"
 )
 

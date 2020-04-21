@@ -3,7 +3,7 @@ package locator
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/korchasa/kogdaeda/types"
+	"github.com/korchasa/dostavki/types"
 	"net/http"
 	"sort"
 	"strconv"
