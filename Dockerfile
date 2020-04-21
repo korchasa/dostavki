@@ -34,6 +34,8 @@ RUN \
 FROM golang:1.13.7-alpine3.11
 WORKDIR /app
 COPY --from=build /app/app ./app
+COPY --from=build /app/web/templates/ ./app/web/templates
+COPY --from=build /app/web/static/ ./app/web/static
 COPY --from=build /etc/localtime /etc/localtime
 USER nobody:nobody
 CMD ./app

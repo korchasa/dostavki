@@ -1,5 +1,5 @@
 ingress:
-  hostname: dostavki
+  hostname: dostavki.info
   tls:
     secret: dostavki-tls
     issuer: letsencrypt-prod
