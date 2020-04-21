@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dostavki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dostavki
+      app.kubernetes.io/instance: dostavki
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: dostavki
+        app.kubernetes.io/instance: dostavki
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: default
+          image: hashicorp/http-echo
+          args:
+          - "-text=hello"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5678
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http

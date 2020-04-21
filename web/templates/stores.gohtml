@@ -1,0 +1,56 @@
+<div class="table-responsive">
+    <table class="table">
+        <tbody>
+        {{ range . }}
+            <tr>
+                <th>{{ (index . 0).Start.Format "02.01" }}</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            {{ range . }}
+                <tr>
+                    <td>{{ .Start.Format "15:04" }} - {{ .End.Format "15:04" }}</td>
+                    {{ with .Chains.auchan }}
+                        <td><a href="https://auchan.zakaz.ua/"><img
+                                        src="https://zakaz.ua/static/images/store-tile-logos/auchan.svg"
+                                        alt="Ашан"/></a></td>
+                    {{ else }}
+                        <td>&nbsp;</td>
+                    {{ end }}
+                    {{ with .Chains.novus }}
+                        <td><a href="https://novus.zakaz.ua/"><img
+                                        src="https://zakaz.ua/static/images/store-tile-logos/novus.svg"
+                                        alt="Novus"/></a></td>
+                    {{ else }}
+                        <td>&nbsp;</td>
+                    {{ end }}
+                    {{ with .Chains.megamarket }}
+                        <td><a href="https://megamarket.zakaz.ua/"><img
+                                        src="https://zakaz.ua/static/images/store-tile-logos/megamarket.svg"
+                                        alt="Ашан"/></a></td>
+                    {{ else }}
+                        <td>&nbsp;</td>
+                    {{ end }}
+                    {{ with .Chains.metro }}
+                        <td><a href="https://metro.zakaz.ua/"><img
+                                        src="https://zakaz.ua/static/images/store-tile-logos/metro.svg" alt="Ашан"/></a>
+                        </td>
+                    {{ else }}
+                        <td>&nbsp;</td>
+                    {{ end }}
+                    {{ with .Chains.furshet }}
+                        <td><a href="https://furshet.zakaz.ua/"><img
+                                        src="https://zakaz.ua/static/images/store-tile-logos/furshet.svg"
+                                        alt="Ашан"/></a></td>
+                    {{ else }}
+                        <td>&nbsp;</td>
+                    {{ end }}
+                </tr>
+            {{ end }}
+        {{ end }}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css" type="text/css">
+    <style>
+        .container {
+            max-width: 1140px;
+        }
+        .map {
+            height: 600px;
+            width: 90%;
+        }
+
+        #windows table td {
+            text-align: center;
+        }
+        #windows table td img {
+            width: 64px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
+
+    <title>Где еда?</title>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col">
+            <h1>Когда еда?</h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <h2>Где вы находитесь?</h2>
+            <div id="map" class="map"></div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div id="windows" class="windows"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+    const kievCoords =  [30.5238, 50.45466];
+
+    const styleMarker = new ol.style.Style({
+        image: new ol.style.Icon({
+            scale: .7,
+            anchor: [0.5, 1],
+            src: '//raw.githubusercontent.com/jonataswalker/map-utils/master/images/marker.png'
+        })
+    });
+
+    const marker = new ol.geom.Point(ol.proj.fromLonLat(kievCoords));
+    const featureMarker = new ol.Feature(marker);
+
+    const vector = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [featureMarker]
+        }),
+        style: [styleMarker]
+    });
+
+    const map = new ol.Map({
+        target: 'map',
+        layers: [new ol.layer.Tile({source: new ol.source.OSM()}), vector],
+        view: new ol.View({center: ol.proj.fromLonLat(kievCoords), zoom: 13})
+    });
+
+    const trans = new ol.interaction.Translate({
+        features: new ol.Collection([featureMarker])
+    });
+    map.addInteraction(trans);
+
+    let timeoutID;
+    trans.on('translateend', function (evt) {
+        clearTimeout(timeoutID);
+        showWindows(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'));
+        // timeoutID = setTimeout(showWindows, 5000, ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'));
+    });
+
+    showWindows(kievCoords);
+
+    function showWindows(coords) {
+        document.getElementById("windows").innerHTML = "<span>...</span>";
+        fetch("/stores/"+coords[1]+"/"+coords[0], {method: "GET"})
+            .then(response => {
+                if (!response.ok) throw Error(response.statusText);
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById("windows").innerHTML = html;
+            })
+            .catch(error => console.error(error));
+    }
+
+</script>
+</body>
+</html>
