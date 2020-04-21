@@ -17,6 +17,7 @@ spec:
       containers:
         - name: default
           image: korchasa/dostavki:latest
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8090
