@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build . --tag dostavki:$GITHUB_REF
+        run: docker build . --tag dostavki:GITHUB_RUN_NUMBER
