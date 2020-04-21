@@ -1,7 +1,7 @@
 package locator
 
 import (
-	"github.com/korchasa/kogdaeda/types"
+	"github.com/korchasa/dostavki/types"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
