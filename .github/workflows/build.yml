@@ -16,7 +16,7 @@ jobs:
           DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
         run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - name: Build the Docker image
-        run: docker build . --tag dostavki:$GITHUB_RUN_NUMBER
+        run: docker build . --tag korchasa/dostavki:$GITHUB_RUN_NUMBER
       - name: Push Docker image
-        run: docker push dostavki:$GITHUB_RUN_NUMBER
+        run: docker push korchasa/dostavki:$GITHUB_RUN_NUMBER
 
