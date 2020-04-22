@@ -1,18 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dostavki
+  name: dostavki-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: dostavki
-      app.kubernetes.io/instance: dostavki
+      name: dostavki
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dostavki
-        app.kubernetes.io/instance: dostavki
+        name: dostavki
     spec:
       containers:
         - name: default

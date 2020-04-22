@@ -1,5 +1,5 @@
 ingress:
-  hostname: dostavki.info
+  hostname: yizha.de
   tls:
     secret: dostavki-tls
     issuer: letsencrypt-prod
