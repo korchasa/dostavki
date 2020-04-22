@@ -10,5 +10,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Log into hub.docker.com
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - name: Build the Docker image
-        run: docker build . --tag dostavki:GITHUB_RUN_NUMBER
+        run: docker build . --tag dostavki:$GITHUB_RUN_NUMBER
+      - name: Push Docker image
+        run: docker push dostavki:$GITHUB_RUN_NUMBER
+
